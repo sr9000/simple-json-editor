@@ -75,7 +75,7 @@ def to_value(items: list[Item]) -> Allowed:
                 stack.append(kvs)
                 if it.collapse:
                     rest.extendleft(it.collapse)
-            case JClose(_):
+            case tuple(_):
                 if len(stack) == 1:
                     raise IndexError("there is no collection to be closed on stack")
                 stack.pop()

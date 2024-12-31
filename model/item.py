@@ -1,7 +1,7 @@
 from dataclasses import dataclass
+from typing import Optional
 
-type JClose = tuple
-type JTypes = None | bool | float | str | list | dict | JClose
+type JTypes = None | bool | float | str | list | dict | tuple
 
 
 @dataclass
@@ -9,9 +9,18 @@ class Item:
     value: JTypes
     level: int
     name: str = "unnamed"
-    collapse: list['Item'] | None = None
-    parent: 'Item' | None = None
-    close: 'Item' | None = None
+    collapse: list["Item"] | None = None
+    parent: Optional["Item"] = None
+    close: Optional["Item"] = None
+
+    def __repr__(self):
+        pr = id(self.parent) if self.parent else None
+        cl = id(self.close) if self.close else None
+        return (
+            f"Item(id={id(self)}, level={self.level}, name={self.name}, "
+            f"value={repr(self.value)}, collapse={bool(self.collapse)}, parent={pr}, "
+            f"close={cl})"
+        )
 
 
 def wrap_none(level: int) -> Item:

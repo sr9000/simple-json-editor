@@ -18,11 +18,12 @@
       <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.entityRelationship.big_entity">
-          <y:Geometry height="120.0" width="155.0" x="304.0" y="180.0"/>
+          <y:Geometry height="137.0" width="155.0" x="304.0" y="180.0"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" backgroundColor="#B7C9E3" configuration="com.yworks.entityRelationship.label.name" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasLineColor="false" height="20.344114303588867" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="34.10820007324219" x="60.445899963378906" xml:space="preserve" y="4.0">value</y:NodeLabel>
-          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="85.72057151794434" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="150.65306091308594" x="2.0" xml:space="preserve" y="32.34411430358887">value JTypes
+          <y:NodeLabel alignment="left" autoSizePolicy="content" configuration="com.yworks.entityRelationship.label.attributes" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="102.0646858215332" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="top" visible="true" width="150.65306091308594" x="2.0" xml:space="preserve" y="32.34411430358887">value JTypes
+level int
 name str
 collapse list[value] | None
 parent value | None
@@ -285,7 +286,10 @@ dict (empty)<y:LabelModel><y:ErdAttributesNodeLabelModel/></y:LabelModel><y:Mode
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="-40.0"/>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="-45.66666666666667">
+            <y:Point x="285.25" y="200.0"/>
+            <y:Point x="285.25" y="202.83333333333331"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
