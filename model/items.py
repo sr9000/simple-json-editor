@@ -20,7 +20,7 @@ def from_value(value: Allowed, level: int = 0) -> list[Item]:
             for i, x in enumerate(xs):
                 sub_res = from_value(x, level + 1)
                 sub_res[0].parent = parent
-                sub_res[0].name = f"[{i}]"
+                sub_res[0].alias = i
                 res.extend(sub_res)
             res.append(new_close(parent, level + 1))
         case dict(kvs):
@@ -29,7 +29,7 @@ def from_value(value: Allowed, level: int = 0) -> list[Item]:
             for k, v in kvs.items():
                 sub_res = from_value(v, level + 1)
                 sub_res[0].parent = parent
-                sub_res[0].name = f"{k}"
+                sub_res[0].alias = k
                 res.extend(sub_res)
             res.append(new_close(parent, level + 1))
         case _:
@@ -55,18 +55,18 @@ def to_value(items: list[Item]) -> Allowed:
         it = rest.popleft()
         match it.value:
             case None:
-                put(stack[-1], None, it.name)
+                put(stack[-1], None, it.alias)
             case bool(x) | float(x) | str(x):
-                put(stack[-1], x, it.name)
+                put(stack[-1], x, it.alias)
             case list(_):
                 xs = []
-                put(stack[-1], xs, it.name)
+                put(stack[-1], xs, it.alias)
                 stack.append(xs)
                 if it.collapse:
                     rest.extendleft(it.collapse)
             case dict(_):
                 kvs = {}
-                put(stack[-1], kvs, it.name)
+                put(stack[-1], kvs, it.alias)
                 stack.append(kvs)
                 if it.collapse:
                     rest.extendleft(it.collapse)

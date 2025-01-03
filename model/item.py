@@ -2,13 +2,14 @@ from dataclasses import dataclass
 from typing import Optional
 
 type JTypes = None | bool | float | str | list | dict | tuple
+type TAlias = None | int | str
 
 
 @dataclass
 class Item:
     value: JTypes
     level: int
-    name: str = "unnamed"
+    alias: TAlias = None
     collapse: list["Item"] | None = None
     parent: Optional["Item"] = None
     close: Optional["Item"] = None
@@ -17,7 +18,7 @@ class Item:
         pr = id(self.parent) if self.parent else None
         cl = id(self.close) if self.close else None
         return (
-            f"Item(id={id(self)}, level={self.level}, name={self.name}, "
+            f"Item(id={id(self)}, level={self.level}, alias={self.alias}, "
             f"value={repr(self.value)}, collapse={bool(self.collapse)}, parent={pr}, "
             f"close={cl})"
         )
