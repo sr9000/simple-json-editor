@@ -4,19 +4,20 @@ from cli.style import StyledLine
 from cli.color import init_colors
 
 console = cr.initscr()
-cr.noecho()
-cr.cbreak()
-cr.curs_set(True)
-cr.mousemask(-1)
-
-console.keypad(True)
 
 
 def initialize():
+    cr.noecho()
+    cr.cbreak()
+    cr.curs_set(True)
+    cr.mousemask(-1)
+
+    console.keypad(True)
+
     init_colors()
 
 
-def show_line(line: StyledLine, offset: int, width: int):
+def show_styled_line(line: StyledLine, offset: int, width: int):
     assert offset >= 0 and width >= 0
     left, right = offset, offset + width
     for cmp in line.contents:

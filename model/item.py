@@ -10,7 +10,7 @@ class Item:
     value: JTypes
     level: int
     alias: TAlias = None
-    collapse: list["Item"] | None = None
+    collapsed: list["Item"] | None = None
     parent: Optional["Item"] = None
     close: Optional["Item"] = None
 
@@ -19,7 +19,7 @@ class Item:
         cl = id(self.close) if self.close else None
         return (
             f"Item(id={id(self)}, level={self.level}, alias={self.alias}, "
-            f"value={repr(self.value)}, collapse={bool(self.collapse)}, parent={pr}, "
+            f"value={repr(self.value)}, collapsed={bool(self.collapsed)}, parent={pr}, "
             f"close={cl})"
         )
 

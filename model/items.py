@@ -62,14 +62,14 @@ def to_value(items: list[Item]) -> Allowed:
                 xs = []
                 put(stack[-1], xs, it.alias)
                 stack.append(xs)
-                if it.collapse:
-                    rest.extendleft(it.collapse)
+                if it.collapsed:
+                    rest.extendleft(it.collapsed)
             case dict(_):
                 kvs = {}
                 put(stack[-1], kvs, it.alias)
                 stack.append(kvs)
-                if it.collapse:
-                    rest.extendleft(it.collapse)
+                if it.collapsed:
+                    rest.extendleft(it.collapsed)
             case tuple(_):
                 if len(stack) == 1:
                     raise IndexError("there is no collection to be closed on stack")
@@ -80,13 +80,13 @@ def to_value(items: list[Item]) -> Allowed:
     assert len(stack) > 0, "stack cannot be empty"
 
     if len(stack) > 1:
-        raise ValueError(f"Too many ({len(stack)}) values left on stack ")
+        raise ValueError(f"too many ({len(stack)}) values left on stack ")
 
     res = stack.pop()
 
     assert len(res) > 0, "result cannot be empty"
 
     if len(res) > 1:
-        raise ValueError(f"Too many ({len(res)}) values got after conversion")
+        raise ValueError(f"too many ({len(res)}) values got after conversion")
 
     return res.pop()
