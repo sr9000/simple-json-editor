@@ -4,11 +4,6 @@ from collections import deque
 type Allowed = None | bool | float | int | str | list | tuple | dict
 
 
-class Entity:
-    def __init__(self):
-        self.items: list[Item] = []
-
-
 def from_value(value: Allowed, level: int = 0) -> list[Item]:
     res: list[Item] = []
 
