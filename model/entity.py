@@ -14,29 +14,29 @@ def from_value(value: Allowed, level: int = 0) -> list[Item]:
 
     match value:
         case None:
-            res.append(wrap_none(level))
+            res.append(new_none(level))
         case bool(x) | float(x) | str(x):
-            res.append(wrap_primitive(x, level))
+            res.append(new_primitive(x, level))
         case int(x):
-            res.append(wrap_primitive(float(x), level))
+            res.append(new_primitive(float(x), level))
         case list(xs) | tuple(xs):
-            parent = wrap_list(level)
+            parent = new_list(level)
             res.append(parent)
             for i, x in enumerate(xs):
                 sub_res = from_value(x, level + 1)
                 sub_res[0].parent = parent
                 sub_res[0].name = f"[{i}]"
                 res.extend(sub_res)
-            res.append(wrap_close(parent, level + 1))
+            res.append(new_close(parent, level + 1))
         case dict(kvs):
-            parent = wrap_dict(level)
+            parent = new_dict(level)
             res.append(parent)
             for k, v in kvs.items():
                 sub_res = from_value(v, level + 1)
                 sub_res[0].parent = parent
                 sub_res[0].name = f"{k}"
                 res.extend(sub_res)
-            res.append(wrap_close(parent, level + 1))
+            res.append(new_close(parent, level + 1))
         case _:
             raise TypeError(f"unconvertable type: {type(value)}")
 

@@ -23,23 +23,23 @@ class Item:
         )
 
 
-def wrap_none(level: int) -> Item:
+def new_none(level: int) -> Item:
     return Item(value=None, level=level)
 
 
-def wrap_primitive(value: bool | float | str, level: int) -> Item:
+def new_primitive(value: bool | float | str, level: int) -> Item:
     return Item(value=value, level=level)
 
 
-def wrap_list(level: int) -> Item:
+def new_list(level: int) -> Item:
     return Item(value=[], level=level)
 
 
-def wrap_dict(level: int) -> Item:
+def new_dict(level: int) -> Item:
     return Item(value={}, level=level)
 
 
-def wrap_close(parent: Item, level: int) -> Item:
+def new_close(parent: Item, level: int) -> Item:
     close_item = Item(value=(), level=level, parent=parent)
     parent.close = close_item
     return close_item
