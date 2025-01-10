@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QTreeView
 import sys
 
 from gui.window import Ui_MainWindow
@@ -17,9 +17,9 @@ def main():
 
     headers = ["Column 1", "Number"]
     data = [
-        ["Item 1", 1, [["SubItem 1.1", 1.1], ["SubItem 1.2", 1.2]]],
-        ["Item 2", 2, [["SubItem 2.1", 2.1]]],
-        ["Item 3", 3],
+        ["Item 1", "1", [["SubItem 1.1", "1.1"], ["SubItem 1.2", "1.2"]]],
+        ["Item 2", "2", [["SubItem 2.1", "2.1", [["Deepest", "wowowow"]]]]],
+        ["Item 3", "3"],
     ]
 
     def add_items(parent, elements):
@@ -35,6 +35,12 @@ def main():
     model = TreeModel(headers, [])
     model.rootItem = root_item
     window_ui.treeView.setModel(model)
+
+    # Enable drag and drop
+    window_ui.treeView.setDragEnabled(True)
+    window_ui.treeView.setAcceptDrops(True)
+    window_ui.treeView.setDropIndicatorShown(True)
+    window_ui.treeView.setDragDropMode(QTreeView.InternalMove)
 
     # Show window
     window.show()

@@ -1,4 +1,16 @@
-from PySide6.QtCore import QAbstractItemModel, QModelIndex, Qt
+import pickle
+
+from PySide6.QtCore import (
+    QAbstractItemModel,
+    QModelIndex,
+    Qt,
+    QMimeData,
+    QByteArray,
+    QDataStream,
+    QIODevice,
+)
+
+MIMETYPE = "application/x-json-treeview-item"
 
 
 class TreeItem:
@@ -53,7 +65,12 @@ class TreeModel(QAbstractItemModel):
     def flags(self, index):
         if not index.isValid():
             return Qt.NoItemFlags
-        return Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        return (
+            Qt.ItemIsEnabled
+            | Qt.ItemIsSelectable
+            | Qt.ItemIsDragEnabled
+            | Qt.ItemIsDropEnabled
+        )
 
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
@@ -93,3 +110,41 @@ class TreeModel(QAbstractItemModel):
     def setupModelData(self, data, parent):
         for item in data:
             parent.appendChild(TreeItem(item, parent))
+
+    def mimeTypes(self):
+        return [MIMETYPE]
+
+    def mimeData(self, indexes):
+        mimeData = QMimeData()
+        encodedData = QByteArray()
+        stream = QDataStream(encodedData, QIODevice.WriteOnly)
+
+        data = [
+            index.internalPointer().itemData
+            for index in indexes
+            if index.isValid() and index.column() == 0
+        ]
+
+        pickled_data = pickle.dumps(data)
+
+        mimeData.setData(MIMETYPE, pickled_data)
+        return mimeData
+
+    def dropMimeData(self, data, action, row, column, parent):
+        if action == Qt.IgnoreAction:
+            return True
+        if not data.hasFormat(MIMETYPE):
+            return False
+
+        encodedData = data.data(MIMETYPE).data()
+        newItems = pickle.loads(encodedData)
+
+        parentItem = self.rootItem if not parent.isValid() else parent.internalPointer()
+        for item in newItems:
+            parentItem.appendChild(TreeItem(item, parentItem))
+
+        self.layoutChanged.emit()
+        return True
+
+    def supportedDropActions(self):
+        return Qt.CopyAction | Qt.MoveAction
