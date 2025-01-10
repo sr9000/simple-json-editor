@@ -140,8 +140,13 @@ class TreeModel(QAbstractItemModel):
         newItems = pickle.loads(encodedData)
 
         parentItem = self.rootItem if not parent.isValid() else parent.internalPointer()
+
+        if row == -1:
+            row = parentItem.childCount()
+
         for item in newItems:
-            parentItem.appendChild(TreeItem(item, parentItem))
+            parentItem.childItems.insert(row, TreeItem(item, parentItem))
+            row += 1
 
         self.layoutChanged.emit()
         return True
