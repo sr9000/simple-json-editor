@@ -64,13 +64,8 @@ class TreeModel(QAbstractItemModel):
 
     def flags(self, index):
         if not index.isValid():
-            return Qt.NoItemFlags
-        return (
-            Qt.ItemIsEnabled
-            | Qt.ItemIsSelectable
-            | Qt.ItemIsDragEnabled
-            | Qt.ItemIsDropEnabled
-        )
+            return Qt.ItemIsDropEnabled
+        return super().flags(index) | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
 
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
@@ -116,8 +111,6 @@ class TreeModel(QAbstractItemModel):
 
     def mimeData(self, indexes):
         mimeData = QMimeData()
-        encodedData = QByteArray()
-        stream = QDataStream(encodedData, QIODevice.WriteOnly)
 
         data = [
             index.internalPointer().itemData
